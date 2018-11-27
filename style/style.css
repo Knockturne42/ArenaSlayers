@@ -17,13 +17,24 @@ body {
 }
 
 main {
-	width: 700px;
-	height: 700px;
+	width: 500px;
+	height: 500px;
 	background-color: red;
+	background-image: url('../img/mapTest.jpg');
+	background-position-x: 0%;
+	background-position-y: 0%;
+	background-repeat: no-repeat;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	transition-duration: 1.5s;
 }
+
+/*-110%/210% X
+-2900/3000*/
+/*background-position-x: 210%;
+	background-position-y: -2900%;*/
+
 
 #joueur {
 	width: 24px;
