@@ -6,42 +6,83 @@ var action = 0;
 myMaps[0].style.backgroundPositionX = '-250px';
 myMaps[0].style.backgroundPositionY = '-100px';
 
+// document.addEventListener("keydown", debounce(function(e){
+// 	console.log(e.keyCode);
+// 	var key = e.keyCode;
+// 	switch(key){
+// 		case 38:
+// 			console.log('haut');
+// 			moveMap(2)
+// 			mainCharacter.style.backgroundPositionX = '0px';
+// 			mainCharacter.style.backgroundPositionY = '0px';
+// 			moveEnemy(2);
+// 			movePerso();
+// 			enemyAttack()
+// 			break;
+// 		case 37:
+// 			console.log('gauche');
+// 			moveMap(1)
+// 			mainCharacter.style.backgroundPositionY = '-96px';
+// 			movePerso();
+// 			moveEnemy(1);
+// 			enemyAttack()
+// 			break;
+// 		case 39:
+// 			console.log('droite');
+// 			moveMap(0)
+// 			mainCharacter.style.backgroundPositionY = '-32px';
+// 			movePerso();
+// 			moveEnemy(0);
+// 			enemyAttack()
+// 			break;
+// 		case 40:
+// 			console.log('bas');
+// 			moveMap(3)
+// 			mainCharacter.style.backgroundPositionY = '-64px';
+// 			movePerso();
+// 			moveEnemy(3);
+// 			enemyAttack()
+// 			break;
+// 		case 68:
+// 			console.log('def');
+// 			break;
+// 		case 83:
+// 			console.log('attaque');
+// 			attaquePerso(mainCharacter);
+// 		default:
+// 			console.log('rien');
+// 			break;
+// 	}
+// }, 450));
+
 document.addEventListener("keydown", debounce(function(e){
-	console.log(e.keyCode);
 	var key = e.keyCode;
+	action = 1;
 	switch(key){
 		case 38:
-			console.log('haut');
 			moveMap(2)
 			mainCharacter.style.backgroundPositionX = '0px';
 			mainCharacter.style.backgroundPositionY = '0px';
 			moveEnemy(2);
-			movePerso();
-			enemyAttack()
+			actionPerso();
 			break;
 		case 37:
-			console.log('gauche');
 			moveMap(1)
 			mainCharacter.style.backgroundPositionY = '-96px';
-			movePerso();
+			actionPerso();
 			moveEnemy(1);
-			enemyAttack()
 			break;
 		case 39:
-			console.log('droite');
 			moveMap(0)
 			mainCharacter.style.backgroundPositionY = '-32px';
-			movePerso();
+			actionPerso();
 			moveEnemy(0);
-			enemyAttack()
 			break;
 		case 40:
-			console.log('bas');
 			moveMap(3)
 			mainCharacter.style.backgroundPositionY = '-64px';
-			movePerso();
+			actionPerso();
 			moveEnemy(3);
-			enemyAttack()
 			break;
 		case 68:
 			console.log('def');
@@ -53,26 +94,27 @@ document.addEventListener("keydown", debounce(function(e){
 			console.log('rien');
 			break;
 	}
-}, 450));
+}, 1));
 
-// document.addEventListener("keyup", function(e){
-// 	console.log(e.keyCode);
-// });
+function actionPerso() {
+	movePerso();
+	enemyAttack();
+}
+
+setInterval(function(){if(action == 1){actionPerso();}}, 1500);
+
+document.addEventListener("keyup", function(e){
+	console.log('keyup');
+	action = 0;
+});
 
 function enemyAttack() {
 	var topEnemy = parseInt(enemyDiv.style.top);
 	var leftEnemy = parseInt(enemyDiv.style.left);
 	var topPlayer = parseInt(mainCharacter.style.top);
 	var leftPlayer = parseInt(mainCharacter.style.left);
-	console.log(leftEnemy+32, leftPlayer, leftEnemy, leftPlayer+32);
-	if((topEnemy + 32) >= (topPlayer-32) && topEnemy <= (topPlayer + 32))
+	if(((topEnemy + 32) >= (topPlayer-32) && topEnemy <= (topPlayer + 32)) && ((leftEnemy + 12) >= (leftPlayer-12) && (leftEnemy-12) <= (leftPlayer + 24)))
 	{	
-		console.log('coucou');
-		attaquePerso(enemyAnimation);
-	}
-	if((leftEnemy + 12) >= (leftPlayer-12) && (leftEnemy -12) <= (leftPlayer + 12))
-	{	
-		console.log('coucou');
 		attaquePerso(enemyAnimation);
 	}
 }
@@ -117,16 +159,16 @@ function moveMap(direction) {
 	var posYActuel = parseInt(myMaps[0].style.backgroundPositionY);
 	switch (direction) {
 		case 0:
-			myMaps[0].style.backgroundPositionX = (posXActuel-24)+'px';
+				myMaps[0].style.backgroundPositionX = (posXActuel-3)+'px';
 			break;
 		case 1:
-			myMaps[0].style.backgroundPositionX = (posXActuel+24)+'px';
+				myMaps[0].style.backgroundPositionX = (posXActuel+3)+'px';
 			break;
 		case 2:
-			myMaps[0].style.backgroundPositionY = (posYActuel+32)+'px';
+				myMaps[0].style.backgroundPositionY = (posYActuel+3)+'px';
 			break;
 		case 3:
-			myMaps[0].style.backgroundPositionY = (posYActuel-32)+'px';
+				myMaps[0].style.backgroundPositionY = (posYActuel-3)+'px';
 			break;
 	}
 }
@@ -135,13 +177,13 @@ function movePerso() {
 	var posActuel = parseInt(mainCharacter.style.backgroundPositionX);
 	setTimeout(function(){
 		mainCharacter.style.backgroundPositionX = '-24px';
-	},150);
+	},250);
 	setTimeout(function(){
 		mainCharacter.style.backgroundPositionX = '-48px';
-	},300);
+	},500);
 	setTimeout(function(){
 		mainCharacter.style.backgroundPositionX = '0px';
-	},450);
+	},750);
 	// switch(posActuel){
 	// 	case 0:
 	// 		mainCharacter.style.backgroundPositionX = '-24px';
@@ -160,16 +202,16 @@ function moveEnemy(direction){
 	var left = parseInt(enemyDiv.style.left);
 	switch (direction) {
 		case 0:
-			enemyDiv.style.left = (left - 24) + 'px';
+				enemyDiv.style.left = (left - 3) + 'px';
 			break;
 		case 1:
-			enemyDiv.style.left = (left + 24) + 'px';
+				enemyDiv.style.left = (left + 3) + 'px';
 			break;
 		case 2:
-			enemyDiv.style.top = (top + 32) + 'px';
+				enemyDiv.style.top = (top + 3) + 'px';
 			break;
 		case 3:
-			enemyDiv.style.top = (top - 32) + 'px';
+				enemyDiv.style.top = (top - 3) + 'px';
 			break;
 	}
 }

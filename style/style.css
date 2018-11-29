@@ -27,7 +27,7 @@ main {
 /*	display: flex;
 	justify-content: center;
 	align-items: center;*/
-	transition-duration: 1s;
+	transition-duration: 0.0417s;
 }
 
 /*-110%/210% X
@@ -50,7 +50,7 @@ main {
 	height: 32px;
 	position: relative;
 	z-index: 1;
-	transition-duration: 1s;
+	transition-duration: 0.0417s;
 }
 #enemyAnimation {
 	width: 100%;
