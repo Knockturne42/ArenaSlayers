@@ -8,6 +8,9 @@
 <body>
 	<main>
 		<div id="joueur"></div>
+		<div id="enemy">
+			<div id="enemyAnimation"></div>
+		</div>
 	</main>
 	<script src="js/script.js"></script>
 </body>
